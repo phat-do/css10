@@ -32,16 +32,18 @@ def load_data(mode="train"):
     if mode=="train":
         # Parse
         fpaths, text_lengths, texts = [], [], []
-        transcript = os.path.join(hp.data, 'transcript.txt')
+        transcript = os.path.join(hp.data, 'metadata.csv')
         lines = codecs.open(transcript, 'r', 'utf-8').readlines()
         for line in lines:
-            fname, _, text, _ = line.strip().split("|")
+            fname, text = line.strip().split("|")
 
             fpath = os.path.join(hp.data, fname)
             fpaths.append(fpath)
 
-            text += u"␃"  # ␃: EOS
-            text = [char2idx[char] for char in text]
+            # text += u"␃"  # ␃: EOS
+            text = "{B} " + text + " {E}"
+
+            text = [char2idx[char] for char in text.split(" ")]
             text_lengths.append(len(text))
             texts.append(np.array(text, np.int32).tostring())
 
@@ -51,14 +53,16 @@ def load_data(mode="train"):
         def _normalize(line):
             text = line.split("|")[0]
             text = " ".join(text.split(" ")[1:])
-            text += u"␃"
+            # text += u"␃"
+            text = "{B} " + text + " {E}"
+
             return text
         lines = codecs.open(hp.test_data, 'r', 'utf-8').read().splitlines()
         sents = [_normalize(line) for line in lines[1:]] # ␃: EOS
         texts = np.zeros((len(sents), hp.max_N), np.int32)
         for i, sent in enumerate(sents):
             print(sent)
-            texts[i, :len(sent)] = [char2idx[char] for char in sent]
+            texts[i, :len(sent)] = [char2idx[char] for char in sent.split(" ")]
         return texts
 
 def get_batch():
@@ -80,8 +84,8 @@ def get_batch():
         if hp.prepro:
             def _load_spectrograms(fpath):
                 fname = os.path.basename(fpath)
-                mel = "{}/mels/{}".format("/data/p301255/speech_corpora/CSS10/"+hp.lang, fname.decode().replace("wav", "npy"))
-                mag = "{}/mags/{}".format("/data/p301255/speech_corpora/CSS10/"+hp.lang, fname.decode().replace("wav", "npy"))
+                mel = "{}/mels/{}".format("/data/p301255/speech_corpora/CSS10/"+hp.lang, fname.decode() + ".npy")
+                mag = "{}/mags/{}".format("/data/p301255/speech_corpora/CSS10/"+hp.lang, fname.decode() + ".npy")
                 return fname, np.load(mel), np.load(mag)
 
             fname, mel, mag = tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32, tf.float32])

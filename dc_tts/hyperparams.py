@@ -52,8 +52,15 @@ class Hyperparams:
         vocab = u'''␀␃ !',-.:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÈàèéìíîïòôù'''
         max_N, max_T = 324, 410
     elif lang=="Dutch":
-        vocab = u'''␀␃ !',-.:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'''
-        max_N, max_T = 393, 507
+        # vocab = u'''␀␃ !',-.:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'''
+        vocab = ['{B}', '{E}', '{P}', '{S}', '{!}', '{?}', '{:}', '{;}', '{.}', '{,}',
+        'ʏ', 'ɲ', 'l', 'aɪ', 'j', 'ɡ', 'ˈe', 'z', 'ɪ', 'ã', 'ˈu', 'ʃ', 'd', 't',
+         'ˈʏ', 'ɔː', 'ˈyː', 'ˈœy', 'b', 'ɑ', 'ˈaɪ', 'a', 'ˈeː', 'ˈɔ̃', 'ˈɛ̃', 'ˈɛ',
+          'ø', 'n', 'ə', 'eː', 'ˈa', 'u', 'ŋ', 'ɔ̃', 'ɛ', 'm', 'ˈʌu', 'v', 'ʒ', 
+          'ɣ', 'x', 'ɔ', 'k', 'oː', 'ˈɔː', 'f', 'ʌu', 'e', 'i', 'ˈə', 'yː', 'ˈɪ',
+           'ˈɔ', 'ˈy', 'ˈø', 'ˈɑ', 'œy', 'ɑː', 'ˈi', 'y', 'ˈɑː', 'r', 'ˈã', 'ˈoː',
+            's', 'p', 'h', 'ʋ', 'ɛ̃']
+        # max_N, max_T = 393, 507
     elif lang=="ru":
         vocab = u'''␀␃ !',-.:;?êАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюяё—'''
         max_N, max_T = 569, 988
@@ -70,8 +77,8 @@ class Hyperparams:
         vocab = u'''␀␃ !,-.:;?ABCDEFGHIJKLMNOPRSTUVWXYZabcdefghijklmnoprstuvwxyzÁÉÍÓÖÚÜáéíóöúüŐőŰű'''
         max_N, max_T = 298, 427
 
-    # max_N = 180 # Maximum number of characters.
-    # max_T = 210 # Maximum number of mel frames.
+    max_N = 180 # Maximum number of characters.
+    max_T = 210 # Maximum number of mel frames.
 
     # training scheme
     lr = 0.001 # Initial learning rate.
