@@ -80,8 +80,8 @@ def get_batch():
         if hp.prepro:
             def _load_spectrograms(fpath):
                 fname = os.path.basename(fpath)
-                mel = "{}/mels/{}".format("/data/private/multi-speech-corpora/dc_tts/"+hp.lang, fname.replace("wav", "npy"))
-                mag = "{}/mags/{}".format("/data/private/multi-speech-corpora/dc_tts/"+hp.lang, fname.replace("wav", "npy"))
+                mel = "{}/mels/{}".format("/data/p301255/speech_corpora/CSS10/"+hp.lang, fname.decode().replace("wav", "npy"))
+                mag = "{}/mags/{}".format("/data/p301255/speech_corpora/CSS10/"+hp.lang, fname.decode().replace("wav", "npy"))
                 return fname, np.load(mel), np.load(mag)
 
             fname, mel, mag = tf.py_func(_load_spectrograms, [fpath], [tf.string, tf.float32, tf.float32])

@@ -6,7 +6,7 @@ https://www.github.com/kyubyong/css10
 '''
 class Hyperparams:
     '''Hyper parameters'''
-    lang = "hu"
+    lang = "Dutch"
 
     # pipeline
     prepro = True  # if True, run `python prepro.py` first before running `python train.py`.
@@ -34,7 +34,7 @@ class Hyperparams:
     attention_win_size = 3
 
     # data
-    data = "/data/private/speech/{}".format(lang)
+    data = "/data/p301255/speech_corpora/CSS10/{}".format(lang)
     test_data = "../MOS/sents/{}.txt".format(lang)
     if lang=="fr":
         vocab = u'''␀␃ !"',-.:;?AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzàâæçèéêëîïôùûœ–’'''  # ␀: Padding, ␃: End of Text
@@ -51,7 +51,7 @@ class Hyperparams:
     elif lang=="it":
         vocab = u'''␀␃ !',-.:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzÀÈàèéìíîïòôù'''
         max_N, max_T = 324, 410
-    elif lang=="nl":
+    elif lang=="Dutch":
         vocab = u'''␀␃ !',-.:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'''
         max_N, max_T = 393, 507
     elif lang=="ru":
@@ -75,7 +75,7 @@ class Hyperparams:
 
     # training scheme
     lr = 0.001 # Initial learning rate.
-    logdir = "{}/logdir".format(lang)
-    sampledir = '{}/samples'.format(lang)
+    logdir = "/scratch/p301255/output/CSS10-IS22/{}/logdir".format(lang)
+    sampledir = '/scratch/p301255/output/CSS10-IS22/{}/samples'.format(lang)
     B = 16 # batch size
     num_iterations = 400000
